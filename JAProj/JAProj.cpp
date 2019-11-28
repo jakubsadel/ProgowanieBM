@@ -4,6 +4,8 @@
 #include <iostream>
 #include <wtypes.h>
 #include <string>
+#include "Checker.h"
+#include "Controller.h"
 
 using namespace std;
 typedef int(_stdcall* MyProc1)(int, int);
@@ -11,50 +13,40 @@ HINSTANCE dllHandle  = LoadLibrary(L"JAAsm.dll");
 
 
 
-int sprawdzTryb(char* xd)
-{
-	if (strcmp(xd, "0") == 0)
-	{
-		return true;
-	}
-	else if (strcmp(xd, "1") == 0)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-
-void pobierzParametry(int argc, char* argv[]) {
-	if (argc > 4 || argc < 3||(!sprawdzTryb(argv[1])))
-	{
-		string argaE = "Nieprawidlowa ilosc argumentow, sprawdz ReadMe.txt";
-		throw  argaE;
-	}
-	if (!((strcmp(argv[1], "0")) || (strcmp(argv[1], "1"))))
-	{
-		string argtE = "Nieprawidlowy tryb, sprawdz ReadMe.txt";
-		throw argtE;
-	}
-}
-
-
-
 
 int main(int argc, char* argv[])
 {
+
+
+
+
 	MyProc1 procedura = (MyProc1)GetProcAddress(dllHandle, "MyProc1");
-	try
+
+
+	if (!loadParams(argc, argv))
 	{
-		pobierzParametry(argc, argv);
+		cout << "Niepoprawne parametry" << endl;
+		exit(0);
 	}
-	catch (string argaE)
+	else
 	{
-		cout << "Wyjatek: " << argaE;
+		cout << "Poprawnie zaladowano dane" << endl;
+
+
+		int mode = atoi(argv[1]);
+		char* fileName = argv[2];
+		int threadsNumber = checkThreads(argv[3]);
+	
+
+
+
+		Controller control(mode, threadsNumber, fileName);
+		control.showParams();
 	}
+		
+
+
+
 
 }
 

@@ -16,4 +16,4 @@ Bitmap::Bitmap(std::string path) :
 	bitmapData = new unsigned char[size];					// tablica sk³adowych pikseli
 	fread(bitmapData, sizeof(unsigned char), size, f);	// wczytanie danych do tablicy
 	fclose(f);
-}
+}	

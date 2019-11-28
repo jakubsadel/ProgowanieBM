@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bitmap.cpp" />
+    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="JAProj.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +160,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bitmap.h" />
+    <ClInclude Include="Checker.h" />
+    <ClInclude Include="Controller.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

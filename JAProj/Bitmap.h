@@ -6,6 +6,7 @@ class Bitmap
 {
 public:
 	Bitmap(std::string path);
+	void showParams();
 private:
 	int width;
 	int height;
