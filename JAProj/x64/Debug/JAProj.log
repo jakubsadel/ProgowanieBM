@@ -1,4 +1,8 @@
-﻿  Controller.cpp
+﻿  Bitmap.cpp
+  Controller.cpp
   JAProj.cpp
+  Trwa kompilowanie...
   Generowanie kodu...
   JAProj.vcxproj -> C:\Users\Kuba\source\repos\ProgowanieBM\x64\Debug\JAProj.exe
+C:\Users\Kuba\source\repos\ProgowanieBM\JAProj\Bitmap.cpp(10): warning C6387: Element „f” może być elementem „0”: jest to niespójne ze specyfikacją funkcji „fread”. 
+C:\Users\Kuba\source\repos\ProgowanieBM\JAProj\Bitmap.cpp(18): warning C6387: Element „f” może być elementem „0”: jest to niespójne ze specyfikacją funkcji „fclose”. W wierszu 10 znajduje się wcześniejsza lokalizacja, w której może to wystąpić
