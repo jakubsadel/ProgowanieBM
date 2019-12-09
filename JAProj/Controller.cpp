@@ -13,3 +13,4 @@ void Controller::showParams()
 	cout << "Ilosc watkow: " << threadsNumber << endl;
 	cout << "Nazwa pliku wejsciowego: " << fileName << endl;
 }
+

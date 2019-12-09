@@ -1,11 +1,8 @@
 ﻿// JAProj.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
 //
 
-#include <iostream>
-#include <wtypes.h>
-#include <string>
-#include "Checker.h"
-#include "Controller.h"
+#include "pch.h"
+
 
 using namespace std;
 
@@ -13,7 +10,6 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-
 
 
 	if (!loadParams(argc, argv))
@@ -31,13 +27,8 @@ int main(int argc, char* argv[])
 		int threadsNumber = checkThreads(argv[3]);
 
 
-
-
 		Controller control(mode, threadsNumber, fileName);
 		control.showParams();
-
-
-	
 
 
 	}

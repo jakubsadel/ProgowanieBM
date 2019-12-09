@@ -1,7 +1,5 @@
 #pragma once
-#include <iostream>
-#include "Bitmap.h"
-using namespace std;
+#include "pch.h"
 
 
 class Controller
@@ -15,6 +13,7 @@ private:
 public:
 	Controller(int mode, int threadsNumber, char* filename);
 	void showParams();
+
 
 };
 
