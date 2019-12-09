@@ -2,6 +2,7 @@
 //
 
 #include "pch.h"
+#include <windows.h>
 
 
 using namespace std;
@@ -29,7 +30,7 @@ int main(int argc, char* argv[])
 
 		Controller control(mode, threadsNumber, fileName);
 		control.showParams();
-
+		control.run();
 
 	}
 }

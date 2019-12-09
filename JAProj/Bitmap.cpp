@@ -9,32 +9,36 @@
 			fclose(File);
 	}
 
-	int CallMyDLLC(unsigned char* Tablica, int Szer, int szerokoscbajt, int start, int koniec)
+
+
+
+
+
+
+
+
+	void CallMyDLLC(unsigned char* Tablica, int Szer, int szerokoscbajt, int start, int koniec)
 	{
 		HINSTANCE hGetProcIDDLL = LoadLibrary("JADLLC.dll");
-		FARPROC lpfnGetProcessID = GetProcAddress(HMODULE(hGetProcIDDLL), "CppOnlyBlur");
+		FARPROC lpfnGetProcessID = GetProcAddress(HMODULE(hGetProcIDDLL), "Proc2");
 		typedef void(__cdecl* pICFUNC)(unsigned char*, int, int, int, int);
 		pICFUNC Algorithm;
 		Algorithm = pICFUNC(lpfnGetProcessID);
 
 		Algorithm(Tablica, Szer, szerokoscbajt, start, koniec);
 
-		FreeLibrary(hGetProcIDDLL);
-		return 0;
 	}
 
-	int CallMyDLLAsm(unsigned char* Tablica, int Szer, int szerokoscbajt, int start, int koniec)
+	void CallMyDLLAsm(unsigned char* Tablica, int Szer, int szerokoscbajt, int start, int koniec)
 	{
-		HINSTANCE hGetProcIDDLL = LoadLibrary("JADLL.dll");
-		FARPROC lpfnGetProcessID = GetProcAddress(HMODULE(hGetProcIDDLL), "AsmOnlyBlur");
+		HINSTANCE hGetProcIDDLL = LoadLibrary("JAAsm.dll");
+		FARPROC lpfnGetProcessID = GetProcAddress(HMODULE(hGetProcIDDLL), "Proc1");
 		typedef void(__cdecl* pICFUNC)(unsigned char*, int, int, int, int);
 		pICFUNC Algorithm;
 		Algorithm = pICFUNC(lpfnGetProcessID);
 
 		Algorithm(Tablica, Szer, szerokoscbajt, start, koniec);
 
-		FreeLibrary(hGetProcIDDLL);
-		return 0;
 	}
 
 	void Bitmap::ResztaDanych()	//Oblicza potrzebne póŸniej dane

@@ -13,7 +13,7 @@ private:
 public:
 	Controller(int mode, int threadsNumber, char* filename);
 	void showParams();
-
+	void run();
 
 };
 

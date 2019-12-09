@@ -14,3 +14,20 @@ void Controller::showParams()
 	cout << "Nazwa pliku wejsciowego: " << fileName << endl;
 }
 
+void Controller::run()
+{
+	Bitmap bitmapa;
+	bitmapa.WczytajPlik("xd.bmp");
+	bitmapa.PrzepiszDoTablicy2();
+	if (mode == 0)
+	{
+		bitmapa.CppBlurMethod(threadsNumber);
+		bitmapa.PrzepiszDoTablicy1();
+		bitmapa.ZapiszPlik("resultcpp.bmp");
+	}
+	else
+	{
+		cout << "brak dll" << endl;
+	}
+}
+
