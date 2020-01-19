@@ -1,33 +1,68 @@
 #include "Controller.h"
+Controller::Controller() :
 
-Controller::Controller(int mode, int threadsNumber, char* fileName)
+	threads(NULL),
+	bitmap(NULL)
 {
-	this->mode = mode;
-	this->threadsNumber = threadsNumber;
-	this->fileName = fileName;
 }
 
-void Controller::showParams()
+Controller::~Controller()
 {
-	cout << "Tryb: " << mode << endl;
-	cout << "Ilosc watkow: " << threadsNumber << endl;
-	cout << "Nazwa pliku wejsciowego: " << fileName << endl;
+
+	delete[] this->threads;
+	this->threads = NULL;
+	delete this->bitmap;
+	this->bitmap = NULL;
+
 }
 
-void Controller::run()
+void Controller::launch()
 {
-	Bitmap bitmapa;
-	bitmapa.WczytajPlik("xd.bmp");
-	bitmapa.PrzepiszDoTablicy2();
-	if (mode == 0)
-	{
-		bitmapa.CppBlurMethod(threadsNumber);
-		bitmapa.PrzepiszDoTablicy1();
-		bitmapa.ZapiszPlik("resultcpp.bmp");
-	}
-	else
-	{
-		cout << "brak dll" << endl;
-	}
+	string filename = "data.bmp";
+
+	transformcpp(4, filename);
 }
 
+
+
+string Controller::transformcpp(int threadsNumber, string picture)
+{
+
+	if (threadsNumber < 1)
+		threadsNumber = 1;
+	else if (threadsNumber > 64)
+		threadsNumber = 64;
+
+	threads = new thread[threadsNumber];
+
+
+	bitmap = new Bitmap(picture);
+	bitmap->splitInto(threadsNumber);
+		std::cout << "CPP\n";
+		if ((dll = LoadLibrary("JACpp.dll")) != NULL)
+		{
+			generatecpp = (funccpp)GetProcAddress(dll, "generatecpp");
+			if (generatecpp == NULL)
+				throw new string("Nie znaleziono funkcji w JACpp.dll!");
+		}
+		else
+			throw new string("Nie znaleziono JACpp.dll!");
+		for (int i = 0; i < threadsNumber; ++i)
+			threads[i] = thread(generatecpp, bitmap->getPartialBitmapData(i), bitmap->getWidth(), bitmap->getPartialHeight(i));
+
+
+	for (int i = 0; i < threadsNumber; ++i)
+		threads[i].join();
+
+
+	bitmap->saveToFile("cpp-result.bmp");
+
+	FreeLibrary(dll);
+	delete[] this->threads;
+	this->threads = NULL;
+	delete this->bitmap;
+	this->bitmap = NULL;
+
+
+	return "result.bmp";
+}

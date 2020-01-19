@@ -1,5 +1,7 @@
 .code
-MyProc1 proc
+generateasm proc
+add RCX, RDX
+mov RAX, RCX
 ret
-MyProc1 endp
+generateasm endp
 end

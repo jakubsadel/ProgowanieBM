@@ -1,6 +1,7 @@
 #pragma once
-
-#include "pch.h"
+#include <vector>
+#include <string>
+#include <iostream>
 
 
 using namespace std;
@@ -8,32 +9,21 @@ using namespace std;
 class Bitmap
 {
 public:
-	FILE* File;
-	FILE* File2;
-	unsigned char* Tablica;
-	unsigned char* Tablica2;
-	int AdresDanych;
-	int RozmiarDanych;
-	int Szerokosc;
-	int szerokoscbajt;
-	int Wysokosc;
-	int zera;
-
+	Bitmap(string);
 	~Bitmap();
-
+	int getSize();
+	int getWidth();
+	int getHeight();
+	unsigned char* getPartialBitmapData(int);
+	int getPartialHeight(int);
+	void saveToFile(string);
+	void splitInto(int);
 private:
-	void ResztaDanych();
-
-public:
-	int WczytajPlik(const char NazwaPliku[50]);
-
-	void PrzepiszDoTablicy2();
-
-	void PrzepiszDoTablicy1();
-
-	void AsmBlurMethod(unsigned int watki);
-
-	void CppBlurMethod(unsigned int watki);
-
-	int ZapiszPlik(const char NazwaPliku[50]);
+	int width;
+	int height;
+	int size;
+	unsigned char* bitmapData;
+	unsigned char* bitmapHeader;
+	vector <unsigned char*> partialBitmapData;
+	vector <int> partialHeight;
 };

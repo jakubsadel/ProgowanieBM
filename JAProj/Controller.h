@@ -1,19 +1,26 @@
 #pragma once
-#include "pch.h"
-
+#include "Bitmap.h"
+#include <thread>
+#include <Windows.h>
+#include <iostream>
+#include <string>
 
 class Controller
 {
-private:
-	int mode;
-	int threadsNumber;
-	char* fileName;
-
-
 public:
-	Controller(int mode, int threadsNumber, char* filename);
-	void showParams();
-	void run();
+	Controller();
+	~Controller();
+	void launch();
+private:
+	thread* threads;
+	Bitmap* bitmap;
 
+
+	//typedef void(*funcasm)(unsigned char*, int, int);
+	typedef void(*funccpp)(unsigned char*, int, int);
+	HMODULE dll;
+	//funcasm generateasm;
+	funccpp generatecpp;
+private:
+	string transformcpp(int, string);
 };
-

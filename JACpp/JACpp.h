@@ -1,3 +1,5 @@
 #pragma once
-
-extern "C" _declspec(dllexport) void MyProc2(unsigned char* tab, int width, int height);
+extern "C" {
+	/* eksportowanie nag³ówka funkcji */
+	__declspec(dllexport) void generatecpp(unsigned char*, int, int);
+}
