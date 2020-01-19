@@ -4,23 +4,26 @@
 #include <Windows.h>
 #include <iostream>
 #include <string>
+#include <ctime>
+#include <fstream>
 
 class Controller
 {
 public:
 	Controller();
 	~Controller();
-	void launch();
+	void launch(int);
 private:
 	thread* threads;
 	Bitmap* bitmap;
+	Bitmap* bitmap1;
 
-
-	//typedef void(*funcasm)(unsigned char*, int, int);
+	typedef void(*funcasm)(unsigned char*, unsigned char*, int, int);
 	typedef void(*funccpp)(unsigned char*, int, int);
 	HMODULE dll;
-	//funcasm generateasm;
+	funcasm generateasm;
 	funccpp generatecpp;
 private:
-	string transformcpp(int, string);
+	void transformcpp(int, string);
+	void transformasm(int, string);
 };

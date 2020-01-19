@@ -2,19 +2,19 @@
 //
 
 #include <iostream>
-#include <windows.h>
 #include "Controller.h"
 
 
 int main()
 {
-    std::cout << "Hello World!\n";
+ 
 
+		Controller* controller = new Controller();
+		controller->launch(1);
+		delete controller;
+		controller = NULL;
 
-	Controller* controller = new Controller();
-	controller->launch();
-	delete controller;
-	controller = NULL;
+		
 
 
 }
