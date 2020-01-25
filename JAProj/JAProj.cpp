@@ -10,7 +10,7 @@ int main()
  
 
 		Controller* controller = new Controller();
-		controller->launch(1);
+		controller->launch(64);
 		delete controller;
 		controller = NULL;
 

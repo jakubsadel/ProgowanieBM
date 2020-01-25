@@ -53,10 +53,10 @@ int Bitmap::getPartialHeight(int index)
 	return this->partialHeight[index];
 }
 
-void Bitmap::saveToFile(string path)
+void Bitmap::saveToFile(string name)
 {
 	FILE* f;
-	const char* c = path.c_str();
+	const char* c = name.c_str();
 	fopen_s(&f, c, "wb");
 	fwrite(bitmapHeader, sizeof(unsigned char), 54, f);
 	fwrite(bitmapData, sizeof(unsigned char), size, f);

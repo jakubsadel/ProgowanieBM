@@ -25,8 +25,13 @@ void Controller::launch(int threadsNumber)
 	else if (threadsNumber > 64)
 		threadsNumber = 64;
 
-	transformcpp( threadsNumber, filename);
-	transformasm( threadsNumber, filename);
+	//transformcpp( threadsNumber, filename);
+
+
+	for (int i = 0; i < 20; i++)
+	{
+		transformasm(threadsNumber, filename);
+	}
 
 }
 
@@ -65,10 +70,10 @@ void Controller::transformcpp(int threadsNumber, string picture)
 		}	
 
 		czas = clock() - czas;
-		std::cout << float(czas) / CLOCKS_PER_SEC << "\n";
+		cout << float(czas) / CLOCKS_PER_SEC << "\n";
 
 
-	bitmap->saveToFile("cpp-result.bmp");
+	bitmap->saveToFile("cpp-results.bmp");
 
 	FreeLibrary(dll);
 	delete[] this->threads;
@@ -104,7 +109,7 @@ void Controller::transformasm(int threadsNumber, string picture)
 
 	for (int i = 0; i < threadsNumber; ++i)
 	{
-		threads[i] = thread(generateasm, bitmap->getPartialBitmapData(i), bitmap1->getPartialBitmapData(i), bitmap->getWidth(), bitmap->getPartialHeight(i));
+		threads[i] = thread(generateasm, bitmap->getPartialBitmapData(i),  bitmap->getWidth(), bitmap->getPartialHeight(i));
 	}
 
 
@@ -114,7 +119,7 @@ void Controller::transformasm(int threadsNumber, string picture)
 	}
 
 	czas = clock() - czas;
-	std::cout << float(czas) / CLOCKS_PER_SEC << "\n";
+	cout << float(czas) / CLOCKS_PER_SEC << "\n";
 	bitmap->saveToFile("asm-result.bmp");
 
 	FreeLibrary(dll);

@@ -18,7 +18,7 @@ void generatecpp(unsigned char* data,  int width, int height)
 		{
 			
 			value = (data[index + 2] + data[index + 1] + data[index]) / 3;	//obliczanie skali szarosci z sredniej
-			if (value > 130)		//sprawdzanie czy pixel jest jasny czy ciemny
+			if (value > 127)		//sprawdzanie czy pixel jest jasny czy ciemny
 			{
 				//ustawia na bialy
 				data[index + 2] = (unsigned char)(255);

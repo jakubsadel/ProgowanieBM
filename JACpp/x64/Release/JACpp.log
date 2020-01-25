@@ -1,8 +1,7 @@
-﻿  dllmain.cpp
-  JACpp.cpp
+﻿  JACpp.cpp
      Trwa tworzenie biblioteki C:\Users\Kuba\source\repos\ProgowanieBM\x64\Release\JACpp.lib i obiektu C:\Users\Kuba\source\repos\ProgowanieBM\x64\Release\JACpp.exp
   Trwa generowanie kodu
-  2 of 2 functions (100.0%) were compiled.
+  1 of 2 functions (50.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Zakończono generowanie kodu
