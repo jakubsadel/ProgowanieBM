@@ -78,7 +78,7 @@ incrLoop:										; pêtla incrementuj¹ca
 ;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 	heightLoop:									; pêtla zewnêtrzena
-		movsxd rdx, dword ptr [rsp + 18h]		; r8 <- width, szerokoœæ kolejnego wiersza
+		movsxd rdx, dword ptr [rsp + 18h]		; width, szerokoœæ kolejnego wiersza
 		movzx eax, byte ptr [rsp + 28h]			; eax <- padding
 		add r15, rax							; pozycja w tablicy przesuniêta o wartosæ padding w celu wyrównania wiersza 
 		dec r8									; dekrementacja wysokoœci - kolejny wiersz
