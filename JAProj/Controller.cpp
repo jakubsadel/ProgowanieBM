@@ -22,8 +22,6 @@ void Controller::launch(int threadsNumber)
 
 	transformcpp(threadsNumber, filename);
 	transformasm(threadsNumber, filename);
-	
-
 }
 
 
@@ -61,10 +59,10 @@ void Controller::transformcpp(int threadsNumber, string picture)
 		}	
 
 		czas = clock() - czas;
-		cout << float(czas) / CLOCKS_PER_SEC << "\n";
+		cout << "CPP: " << float(czas) / CLOCKS_PER_SEC << "\n";
 
 
-	//bitmap->saveToFile("cpp-result.bmp");
+	bitmap->saveToFile("cpp-result.bmp");
 
 	FreeLibrary(dll);
 	delete[] this->threads;
@@ -108,8 +106,8 @@ void Controller::transformasm(int threadsNumber, string picture)
 	}
 
 	czas = clock() - czas;
-	cout << float(czas) / CLOCKS_PER_SEC << "\n";
-	//bitmap->saveToFile("asm-result.bmp");
+	cout << "ASM: " << float(czas) / CLOCKS_PER_SEC << "\n";
+	bitmap->saveToFile("asm-result.bmp");
 
 	FreeLibrary(dll);
 	delete[] this->threads;
