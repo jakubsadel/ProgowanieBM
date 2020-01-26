@@ -16,7 +16,6 @@ public:
 private:
 	thread* threads;
 	Bitmap* bitmap;
-	Bitmap* bitmap1;
 
 	typedef void(*funcasm)(unsigned char*, int, int);
 	typedef void(*funccpp)(unsigned char*, int, int);

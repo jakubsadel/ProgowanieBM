@@ -10,12 +10,15 @@ generateasm PROC
 
 ;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ; przygotowanie rejestrów i zmiennych
+; DATA RCX
+; WIDTH EDX
+; HEIGHT R8D
 ;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 	emms										; przygotowanie koprocesora do dzia³añ na wartoœciach zmiennoprzecinkowych
 
-	mov dword ptr [rsp + 18h], edx				; pobiera i zapisuje szerokoœæ z r8
+	mov dword ptr [rsp + 18h], edx				; pobiera i zapisuje szerokoœæ 
 	mov byte ptr [rsp + 28h], 0					; padding ( bmp padding ) 
 
 ; if ((width * 3) % 4 != 0)
@@ -35,39 +38,39 @@ falseIf:
 widthLoop:										; pêtla wewnêtrzna 
 
 		movzx rax, byte ptr [rcx + r15 + 2]		; zapisanie do rax wartoœci sk³adowej koloru zielonego piksela prawego obrazu ( wype³nia zerami ró¿nice w pojemnoœci typów )
-		cvtsi2sd xmm6,rax						;konwersja 32-bitowej wartoœci ca³kowitoliczbowej do 64-bitowej wartoœci zmiennoprzecinkowej
+		cvtsi2sd xmm6,rax						; konwersja 32-bitowej wartoœci ca³kowitoliczbowej do 64-bitowej wartoœci zmiennoprzecinkowej
 
 		movzx rax, byte ptr [rcx + r15 + 1]		; zapisanie do rax wartoœci sk³adowej koloru zielonego piksela prawego obrazu ( wype³nia zerami ró¿nice w pojemnoœci typów )
-		cvtsi2sd xmm5,rax						;konwersja 32-bitowej wartoœci ca³kowitoliczbowej do 64-bitowej wartoœci zmiennoprzecinkowej
+		cvtsi2sd xmm5,rax						; konwersja 32-bitowej wartoœci ca³kowitoliczbowej do 64-bitowej wartoœci zmiennoprzecinkowej
 		
 		movzx rax, byte ptr [rcx + r15]			; analogicznie do koloru zielonego
-		cvtsi2sd xmm4,rax						;konwersja 32-bitowej wartoœci ca³kowitoliczbowej do 64-bitowej wartoœci zmiennoprzecinkowej
+		cvtsi2sd xmm4,rax						; konwersja 32-bitowej wartoœci ca³kowitoliczbowej do 64-bitowej wartoœci zmiennoprzecinkowej
 
-		addsd xmm4,xmm5						;sumowanie wartoœci B z wartoœci¹ G
-		addsd xmm4,xmm6						;sumowanie poprzednio uzyskanej wartoœci z wartoœci¹ R
-		divsd xmm4,three					;dzielenie liczby przez 3 celem uzyskania wartoœci koloru szaroœci
+		addsd xmm4,xmm5							; sumowanie wartoœci B z wartoœci¹ G
+		addsd xmm4,xmm6							; sumowanie poprzednio uzyskanej wartoœci z wartoœci¹ R
+		divsd xmm4,three						; dzielenie liczby przez 3 celem uzyskania wartoœci koloru szaroœci
 
-        comisd  xmm4, QWORD PTR threshold
-        jbe    SHORT conditionLoop
-
-
-		cvttsd2si rax,xmm4					;konwersja 64-bitowej wartoœci zmiennoprzecinkowej do 32-bitowej wartoœci ca³kowitoliczbowej
-		mov byte ptr[rcx + r15],255		;zapisanie przetworznonego parametru B do tablicy
-		mov byte ptr[rcx + r15 + 1],255		;zapisanie przetworzonego parametru G do tablicy
-		mov byte ptr[rcx + r15 + 2],255		;zapisanie przetworzonego parametru R do tablicy
-	    jmp     SHORT incrLoop
+        comisd  xmm4, QWORD PTR threshold		; porówanie otrzymaje wartoœci z wartoœci¹ progowa
+        jbe    SHORT conditionLoop				; skok jesli mniejsze lub równe
 
 
-conditionLoop:
-		cvttsd2si rax,xmm4					;konwersja 64-bitowej wartoœci zmiennoprzecinkowej do 32-bitowej wartoœci ca³kowitoliczbowej
-		mov byte ptr[rcx + r15],0			;zapisanie przetworznonego parametru B do tablicy
-		mov byte ptr[rcx + r15 + 1],0		;zapisanie przetworzonego parametru G do tablicy
-		mov byte ptr[rcx + r15 + 2],0		;zapisanie przetworzonego parametru R do tablicy
+		cvttsd2si rax,xmm4						; konwersja 64-bitowej wartoœci zmiennoprzecinkowej do 32-bitowej wartoœci ca³kowitoliczbowej
+		mov byte ptr[rcx + r15],255				; zapisanie bia³ego jako parametr B do tablicy
+		mov byte ptr[rcx + r15 + 1],255			; zapisanie bia³ego jako parametr do tablicy
+		mov byte ptr[rcx + r15 + 2],255			; zapisanie bia³ego jako parametr do tablicy
+	    jmp     SHORT incrLoop					; skok do przesuniêcia tablicy
 
 ;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-incrLoop:
+conditionLoop:									; pêtla warunkowa
+		cvttsd2si rax,xmm4						; konwersja 64-bitowej wartoœci zmiennoprzecinkowej do 32-bitowej wartoœci ca³kowitoliczbowej
+		mov byte ptr[rcx + r15],0				; zapisanie czarnego jako parametr B do tablicy
+		mov byte ptr[rcx + r15 + 1],0			; zapisanie czarnego jako parametr G do tablicy
+		mov byte ptr[rcx + r15 + 2],0			; zapisanie czarnego jako parametr R do tablicy
 
+;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+incrLoop:										; pêtla incrementuj¹ca
 		add r15, 3								; przesuniêcie indeksu tablicy o 3, bo analizowane sa 3 sk³adowe w jednej iteracji 
 		dec rdx									; dekrementacja szerokoœci wiersza
 		jnz widthLoop							; skok do pêtli wewnetrznej je¿eli szerokoœæ nie jest zerem

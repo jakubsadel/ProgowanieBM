@@ -18,20 +18,11 @@ Controller::~Controller()
 
 void Controller::launch(int threadsNumber)
 {
-	string filename = "zima.bmp";
+	string filename = "dana.bmp";
 
-	if (threadsNumber < 1)
-		threadsNumber = 1;
-	else if (threadsNumber > 64)
-		threadsNumber = 64;
-
-	//transformcpp( threadsNumber, filename);
-
-
-	for (int i = 0; i < 20; i++)
-	{
-		transformasm(threadsNumber, filename);
-	}
+	transformcpp(threadsNumber, filename);
+	transformasm(threadsNumber, filename);
+	
 
 }
 
@@ -73,7 +64,7 @@ void Controller::transformcpp(int threadsNumber, string picture)
 		cout << float(czas) / CLOCKS_PER_SEC << "\n";
 
 
-	bitmap->saveToFile("cpp-results.bmp");
+	//bitmap->saveToFile("cpp-result.bmp");
 
 	FreeLibrary(dll);
 	delete[] this->threads;
@@ -92,8 +83,6 @@ void Controller::transformasm(int threadsNumber, string picture)
 	threads = new thread[threadsNumber];
 	bitmap = new Bitmap(picture);
 	bitmap->splitInto(threadsNumber);
-	bitmap1 = new Bitmap(picture);
-	bitmap1->splitInto(threadsNumber);
 
 
 	if ((dll = LoadLibrary("JAAsm.dll")) != NULL)
@@ -120,15 +109,13 @@ void Controller::transformasm(int threadsNumber, string picture)
 
 	czas = clock() - czas;
 	cout << float(czas) / CLOCKS_PER_SEC << "\n";
-	bitmap->saveToFile("asm-result.bmp");
+	//bitmap->saveToFile("asm-result.bmp");
 
 	FreeLibrary(dll);
 	delete[] this->threads;
 	this->threads = NULL;
 	delete this->bitmap;
 	this->bitmap = NULL;
-
-	;
 }
 
 

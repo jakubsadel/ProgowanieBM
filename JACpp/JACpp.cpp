@@ -5,7 +5,6 @@ void generatecpp(unsigned char* data,  int width, int height)
 	unsigned char pad = 0;		// padding bmp - s³u¿y dostosowaniu do tego, ¿eby liczba pikseli w ka¿dym wierszu by³a podzielna przez 4 
 	int index = 0;				// indeks tablicy pikseli
 
-
 	double value;
 	if ((width * 3) % 4 != 0)
 	{
